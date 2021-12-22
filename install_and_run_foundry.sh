@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Wenn manche der folgenden Variablen eines dieser Zeichen enthält
+# If one or more of the following variables is in your credentials
 # $`"\!
-# dann muss dieses mit einem Backslash escaped werden.
-# Beispiel:
+# they have to be escaped with a backslash.
+# Example:
 # FOUNDRY_PASSWORD_WEB=Start123! 
-#      muss werden zu 
+#      has to change to
 # FOUNDRY_PASSWORD_WEB=Start123\!
  
 FOUNDRY_USERNAME_WEB=XYZ 
@@ -13,6 +13,7 @@ FOUNDRY_PASSWORD_WEB=XYZ
 FOUNDRY_ADMIN_KEY_SRV=XYZ
 HOSTNAME=XYZ
 MAIL=XYZ@DOMAIN.com
+FOUNDRY_VERSION=release #Only change if you want to use another version than the actual release
 
 groupadd -g 421 foundry
 useradd -u 421 -g foundry -s /usr/sbin/nologin foundry
@@ -57,7 +58,7 @@ version: "3.8"
 
 services:
   foundry:
-    image: felddy/foundryvtt:release
+    image: felddy/foundryvtt:$FOUNDRY_VERSION
     hostname: $HOSTNAME
     init: true
     restart: "unless-stopped"
