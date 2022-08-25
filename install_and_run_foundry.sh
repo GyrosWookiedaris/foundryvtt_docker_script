@@ -79,7 +79,8 @@ server {
 EOF
 
 service nginx reload
-certbot --nginx --non-interactive --agree-tos -m $MAIL --redirect --domains $HOSTNAME
+certbot --nginx --non-interactive --agree-tos -m $MAIL --redirect --domains $HOSTNAME_PROD
+certbot --nginx --non-interactive --agree-tos -m $MAIL --redirect --domains $HOSTNAME_DEV
 
 cat << EOF > /data/foundry/prod/docker-compose.yml
 version: "3.8"
