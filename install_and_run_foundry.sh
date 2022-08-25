@@ -133,7 +133,7 @@ services:
       - FOUNDRY_PROXY_PORT=443
       - FOUNDRY_PROXY_SSL=true
     ports:
-      - target: 30001
+      - target: 30000
         published: 30001
         protocol: tcp
 EOF
