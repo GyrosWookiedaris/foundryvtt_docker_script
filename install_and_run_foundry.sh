@@ -146,37 +146,37 @@ EOF
 cat << EOF > /data/foundry/prod/server_scripts/start.sh
 #!/bin/bash
 cd /data/foundry/prod
-docker-compose up -d
+docker compose up -d
 EOF
 
 cat << EOF > /data/foundry/dev/server_scripts/start.sh
 #!/bin/bash
 cd /data/foundry/dev
-docker-compose up -d
+docker compose up -d
 EOF
 
 cat << EOF > /data/foundry/prod/server_scripts/restart.sh
 #!/bin/bash
 cd /data/foundry/prod
-docker-compose restart
+docker compose restart
 EOF
 
 cat << EOF > /data/foundry/dev/server_scripts/restart.sh
 #!/bin/bash
 cd /data/foundry/dev
-docker-compose restart
+docker compose restart
 EOF
 
 cat << EOF > /data/foundry/prod/server_scripts/stop.sh
 #!/bin/bash
 cd /data/foundry/prod
-docker-compose stop
+docker compose stop
 EOF
 
 cat << EOF > /data/foundry/dev/server_scripts/stop.sh
 #!/bin/bash
 cd /data/foundry/dev
-docker-compose stop
+docker compose stop
 EOF
 
 cat << EOF > /data/foundry/prod/server_scripts/update_and_restart.sh
@@ -184,7 +184,7 @@ cat << EOF > /data/foundry/prod/server_scripts/update_and_restart.sh
 cd /data/foundry/prod
 docker-compose stop
 docker pull felddy/foundryvtt:release
-docker-compose up -d
+docker compose up -d
 EOF
 
 cat << EOF > /data/foundry/dev/server_scripts/update_and_restart.sh
@@ -192,7 +192,7 @@ cat << EOF > /data/foundry/dev/server_scripts/update_and_restart.sh
 cd /data/foundry/dev
 docker-compose stop
 docker pull felddy/foundryvtt:release
-docker-compose up -d
+docker compose up -d
 EOF
 
 chown -R foundry:foundry /data/foundry
@@ -206,7 +206,8 @@ chmod +x /data/foundry/dev/server_scripts/stop.sh
 chmod +x /data/foundry/dev/server_scripts/update_and_restart.sh
 
 cd /data/foundry/prod
-docker-compose up -d
+docker compose up -d
 #cd /data/foundry/dev
-#docker-compose up -d
+#docker compose up -d
+
 
