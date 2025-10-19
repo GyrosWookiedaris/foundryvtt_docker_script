@@ -18,11 +18,16 @@ FOUNDRY_VERSION=release #Only change if you want to use another version than the
 
 groupadd -g 421 foundry
 useradd -u 421 -g foundry -s /usr/sbin/nologin foundry
-apt update && apt upgrade
-apt install docker.io nginx certbot python3-certbot-nginx -y
-curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
-ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+#apt install docker.io nginx certbot python3-certbot-nginx -y
+#curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+#chmod +x /usr/local/bin/docker-compose
+#ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+chmod a+r /etc/apt/keyrings/docker.asc
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+apt update && apt upgrade && apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 touch /etc/nginx/sites-available/foundry_prod.conf
 ln -s /etc/nginx/sites-available/foundry_prod.conf /etc/nginx/sites-enabled/foundry_prod.conf
 touch /etc/nginx/sites-available/foundry_dev.conf
@@ -38,7 +43,7 @@ server {
     server_name             $HOSTNAME_PROD;
     # Listen on port 80 without SSL certificates
     listen                  80;
-    # Sets the Max Upload size to 300 MB
+    # Sets the Max Upload size to 3000 MB
     client_max_body_size 3000M;
     # Proxy Requests to Foundry VTT
     location / {
@@ -61,7 +66,7 @@ server {
     server_name             $HOSTNAME_DEV;
     # Listen on port 80 without SSL certificates
     listen                  80;
-    # Sets the Max Upload size to 300 MB
+    # Sets the Max Upload size to 3000 MB
     client_max_body_size 3000M;
     # Proxy Requests to Foundry VTT
     location / {
@@ -202,5 +207,6 @@ chmod +x /data/foundry/dev/server_scripts/update_and_restart.sh
 
 cd /data/foundry/prod
 docker-compose up -d
-cd /data/foundry/dev
-docker-compose up -d
+#cd /data/foundry/dev
+#docker-compose up -d
+
